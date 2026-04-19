@@ -80,13 +80,13 @@ def translate(text: str) -> str:
 # ---------- EasyScholar 期刊排名查询 ----------
 
 EASYSCHOLAR_KEY = "5b3999c870c042d6a4aacbd6ba13f100"
-EASYSCHOLAR_CACHE = {{}}  # 运行内缓存，避免重复查询同期刊
+EASYSCHOLAR_CACHE = {}  # 运行内缓存，避免重复查询同期刊
 
 
 def get_journal_rank(journal_name: str) -> dict:
     """查询期刊排名信息，返回关键指标字典"""
     if not journal_name or journal_name in EASYSCHOLAR_CACHE:
-        return EASYSCHOLAR_CACHE.get(journal_name, {{}})
+        return EASYSCHOLAR_CACHE.get(journal_name, {})
 
     try:
         url = f"https://www.easyscholar.cc/open/getPublicationRank?secretKey={EASYSCHOLAR_KEY}&publicationName={urllib.request.quote(journal_name)}"
@@ -95,11 +95,11 @@ def get_journal_rank(journal_name: str) -> dict:
             result = json.loads(resp.read().decode("utf-8"))
 
         if result.get("code") != 200:
-            EASYSCHOLAR_CACHE[journal_name] = {{}}
-            return {{}}
+            EASYSCHOLAR_CACHE[journal_name] = {}
+            return {}
 
-        data = result.get("data", {{}})
-        official = data.get("officialRank", {{}}).get("all", {{}})
+        data = result.get("data", {})
+        official = data.get("officialRank", {}).get("all", {})
 
         # 提取关键信息
         rank_info = {{
@@ -111,12 +111,12 @@ def get_journal_rank(journal_name: str) -> dict:
         }}
 
         # 解析 customRank 中的 SCI分区 和 预警
-        rank_list = data.get("customRank", {{}}).get("rank", [])
+        rank_list = data.get("customRank", {}).get("rank", [])
         for item in rank_list:
             parts = item.split("&&&")
             if len(parts) == 2:
                 uuid, level = parts
-                rank_infos = data.get("customRank", {{}}).get("rankInfo", [])
+                rank_infos = data.get("customRank", {}).get("rankInfo", [])
                 for ri in rank_infos:
                     if ri.get("uuid") == uuid:
                         abb = ri.get("abbName", "")
@@ -129,8 +129,8 @@ def get_journal_rank(journal_name: str) -> dict:
         return rank_info
     except Exception as e:
         log.warning(f"  期刊排名查询失败 [{journal_name}]: {e}")
-        EASYSCHOLAR_CACHE[journal_name] = {{}}
-        return {{}}
+        EASYSCHOLAR_CACHE[journal_name] = {}
+        return {}
 
 
 # ---------- 智谱 GLM 设计启发总结 ----------
@@ -527,3 +527,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
