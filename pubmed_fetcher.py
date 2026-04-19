@@ -135,22 +135,22 @@ def get_journal_rank(journal_name: str) -> dict:
 
 # ---------- 智谱 GLM 设计启发总结 ----------
 
-INSIGHT_PROMPT = """你是一名CAR-M（嵌合抗原受体巨噬细胞）领域的资深研究员。请基于以下文献标题和中文摘要，从两个维度总结设计启发：
+INSIGHT_PROMPT = """你是一名CAR-M（嵌合抗原受体巨噬细胞）领域的资深研究员。请基于以下文献信息，总结设计启发。
 
-1. **递送方式：** 文中使用了什么方法将CAR基因导入巨噬细胞？是否有新型载体、体内递送策略、或递送优化方案？
-2. **CAR-M 结构设计：** 文中CAR的结构特点是什么？靶向什么抗原？采用了什么信号域/共刺激域？是否有结构创新？
+文献信息：
+- 第一作者：{first_author}
+- 期刊：{journal}
+- 标题：{title}
+- 中文摘要：{abstract}
 
 要求：
-- 只提取摘要中明确提到或可合理推断的信息，不要编造
-- 简洁精炼，每个维度2-3句话
-- 如果某个维度在摘要中无法提取，写"摘要中未明确提及"
-- 用中文回答，格式严格如下：
+1. 从"递送方式"和"CAR-M结构设计"两个维度总结，每个维度1-2句话
+2. 只提取摘要中明确提到或可合理推断的信息，不要编造
+3. 如果某个维度在摘要中无法提取，写"摘要中未明确提及"
+4. 用中文回答，格式严格如下（每行一个维度，不要换行）：
 
-**💡 递送方式：** xxx
-**🧬 CAR-M 结构设计：** xxx
-
-标题：{title}
-摘要：{abstract}"""
+💡 递送方式：xxx
+🧬 CAR-M 结构设计：xxx"""
 
 
 def call_zhipu(prompt: str, max_retries: int = 3) -> str:
@@ -181,11 +181,16 @@ def call_zhipu(prompt: str, max_retries: int = 3) -> str:
     return "AI 总结生成失败"
 
 
-def generate_insight(title: str, abstract_zh: str) -> str:
+def generate_insight(first_author: str, journal: str, title: str, abstract_zh: str) -> str:
     """生成 CAR-M 设计启发总结"""
     if not ZHIPU_API_KEY:
         return ""
-    prompt = INSIGHT_PROMPT.format(title=title, abstract=abstract_zh)
+    prompt = INSIGHT_PROMPT.format(
+        first_author=first_author,
+        journal=journal,
+        title=title,
+        abstract=abstract_zh
+    )
     raw = call_zhipu(prompt)
     return md_to_html(raw)
 
@@ -297,10 +302,26 @@ def build_email_html(all_results: list[dict], search_days: int) -> str:
             if insight and "失败" not in insight:
                 # 提取关键信息，压缩成一行
                 first_line = insight.split("<br>")[0].strip()
-                # 去掉 HTML 标签用于速览
+                # 去掉 HTML 标签，提取递送方式要点
                 import re as _re
-                first_line = _re.sub(r'<[^>]+>', '', first_line)
-                overview_lines.append(f"<li>{html.escape(first_line)}</li>")
+                clean_text = _re.sub(r'<[^>]+>', '', insight)
+                # 取递送方式那行
+                delivery_line = ""
+                for line in clean_text.split("<br>"):
+                    line = line.strip()
+                    if "递送方式" in line:
+                        delivery_line = _re.sub(r'^.*?递送方式[：:]\s*', '', line).strip()
+                        break
+                if not delivery_line:
+                    delivery_line = clean_text.split("<br>")[0].strip()
+
+                # 提取第一作者（去掉 et al.）
+                first_author = art.get("authors", "").split(",")[0].strip().replace(" et al.", "")
+                journal_name = art.get("journal", "")
+
+                overview_lines.append(
+                    f"<li><strong>{html.escape(first_author)}</strong> 在 <strong>{html.escape(journal_name)}</strong> 提出：{html.escape(delivery_line)}</li>"
+                )
 
     overview_html = ""
     if overview_lines:
@@ -507,7 +528,7 @@ def main():
             log.info(f"  开始生成 AI 设计启发...")
             for i, art in enumerate(articles):
                 log.info(f"    {i+1}/{len(articles)}: {art['title'][:60]}...")
-                art["insight"] = generate_insight(art["title"], art["abstract_zh"])
+                art["insight"] = generate_insight(art["authors"].split(",")[0].strip(), art["journal"], art["title"], art["abstract_zh"])
                 time.sleep(0.5)
         else:
             log.info("  未配置 ZHIPU_API_KEY，跳过 AI 总结")
