@@ -77,6 +77,62 @@ def translate(text: str) -> str:
         return text
 
 
+# ---------- EasyScholar 期刊排名查询 ----------
+
+EASYSCHOLAR_KEY = "5b3999c870c042d6a4aacbd6ba13f100"
+EASYSCHOLAR_CACHE = {{}}  # 运行内缓存，避免重复查询同期刊
+
+
+def get_journal_rank(journal_name: str) -> dict:
+    """查询期刊排名信息，返回关键指标字典"""
+    if not journal_name or journal_name in EASYSCHOLAR_CACHE:
+        return EASYSCHOLAR_CACHE.get(journal_name, {{}})
+
+    try:
+        url = f"https://www.easyscholar.cc/open/getPublicationRank?secretKey={EASYSCHOLAR_KEY}&publicationName={urllib.request.quote(journal_name)}"
+        req = urllib.request.Request(url)
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            result = json.loads(resp.read().decode("utf-8"))
+
+        if result.get("code") != 200:
+            EASYSCHOLAR_CACHE[journal_name] = {{}}
+            return {{}}
+
+        data = result.get("data", {{}})
+        official = data.get("officialRank", {{}}).get("all", {{}})
+
+        # 提取关键信息
+        rank_info = {{
+            "sciif": official.get("sciif", "—"),
+            "sciif5": official.get("sciif5", "—"),
+            "jci": official.get("jci", "—"),
+            "sciUp": official.get("sciUp", "—"),
+            "esi": official.get("esi", "—"),
+        }}
+
+        # 解析 customRank 中的 SCI分区 和 预警
+        rank_list = data.get("customRank", {{}}).get("rank", [])
+        for item in rank_list:
+            parts = item.split("&&&")
+            if len(parts) == 2:
+                uuid, level = parts
+                rank_infos = data.get("customRank", {{}}).get("rankInfo", [])
+                for ri in rank_infos:
+                    if ri.get("uuid") == uuid:
+                        abb = ri.get("abbName", "")
+                        if "SCI" in abb or "中科院" in abb:
+                            rank_info["sciZone"] = level
+                        elif "预警" in abb:
+                            rank_info["warning"] = level
+
+        EASYSCHOLAR_CACHE[journal_name] = rank_info
+        return rank_info
+    except Exception as e:
+        log.warning(f"  期刊排名查询失败 [{journal_name}]: {e}")
+        EASYSCHOLAR_CACHE[journal_name] = {{}}
+        return {{}}
+
+
 # ---------- 智谱 GLM 设计启发总结 ----------
 
 INSIGHT_PROMPT = """你是一名CAR-M（嵌合抗原受体巨噬细胞）领域的资深研究员。请基于以下文献标题和中文摘要，从两个维度总结设计启发：
@@ -240,9 +296,10 @@ def build_email_html(all_results: list[dict], search_days: int) -> str:
             insight = art.get("insight", "")
             if insight and "失败" not in insight:
                 # 提取关键信息，压缩成一行
-                first_line = insight.split("\n")[0].strip()
-                if first_line.startswith("**"):
-                    first_line = first_line.lstrip("*").strip()
+                first_line = insight.split("<br>")[0].strip()
+                # 去掉 HTML 标签用于速览
+                import re as _re
+                first_line = _re.sub(r'<[^>]+>', '', first_line)
                 overview_lines.append(f"<li>{html.escape(first_line)}</li>")
 
     overview_html = ""
@@ -277,6 +334,8 @@ body {{ font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; c
 
 .meta {{ font-size: 11px; color: #888; margin-bottom: 4px; }}
 
+.rank-tags {{ font-size: 11px; color: #2e86c1; margin-bottom: 4px; font-weight: 600; }}
+
 .title-zh {{ font-size: 15px; font-weight: 700; color: #1a1a2e; line-height: 1.5; margin: 4px 0; }}
 .title-en {{ font-size: 12px; color: #999; line-height: 1.4; margin: 2px 0 6px 0; }}
 
@@ -308,6 +367,24 @@ details summary:hover {{ color: #1a5276; }}
             abstract_zh = art.get("abstract_zh", "")
             insight = art.get("insight", "")
             pubmed_url = f"https://pubmed.ncbi.nlm.nih.gov/{art['pmid']}/"
+            rank = art.get("rank", {})
+
+            # 期刊排名标签
+            rank_tags = []
+            if rank.get("sciif") and rank["sciif"] != "—":
+                rank_tags.append(f"IF: {rank['sciif']}")
+            if rank.get("sciif5") and rank["sciif5"] != "—":
+                rank_tags.append(f"IF5: {rank['sciif5']}")
+            if rank.get("sciUp") and rank["sciUp"] != "—":
+                rank_tags.append(rank["sciUp"])
+            if rank.get("jci") and rank["jci"] != "—":
+                rank_tags.append(f"JCI: {rank['jci']}")
+            if rank.get("warning"):
+                rank_tags.append(f"⚠️ 预警: {rank['warning']}")
+
+            rank_html = ""
+            if rank_tags:
+                rank_html = f'<div class="rank-tags">{" &nbsp;|&nbsp; ".join(rank_tags)}</div>'
 
             insight_html = ""
             if insight and "失败" not in insight:
@@ -320,6 +397,7 @@ details summary:hover {{ color: #1a5276; }}
     <span class="paper-link"><a href="{pubmed_url}" target="_blank">PubMed 🔗</a></span>
   </div>
   <div class="meta">📖 {html.escape(art['journal'] or 'Unknown')} &nbsp;|&nbsp; 📆 {html.escape(art['date'] or '—')} &nbsp;|&nbsp; ✍️ {html.escape(art['authors'] or '—')}</div>
+  {rank_html}
   <div class="title-zh">{html.escape(title_zh)}</div>
   <div class="title-en">{html.escape(art['title'])}</div>
   {insight_html}
@@ -400,6 +478,13 @@ def main():
 
         # 获取详情 + 翻译
         articles = fetch_details(pmids_to_fetch)
+
+        # 查询期刊排名
+        log.info(f"  查询期刊排名...")
+        for art in articles:
+            art["rank"] = get_journal_rank(art["journal"])
+            time.sleep(0.3)
+
         log.info(f"  开始翻译...")
         for i, art in enumerate(articles):
             log.info(f"    {i+1}/{len(articles)}: {art['title'][:60]}...")
