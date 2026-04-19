@@ -25,6 +25,7 @@ jobs:
       - name: Run PubMed fetcher
         env:
           SMTP_AUTH_CODE: ${{ secrets.SMTP_AUTH_CODE }}
+          ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
         run: python pubmed_fetcher.py --config config_car_m
 
       - name: Commit state

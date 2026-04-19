@@ -1,4 +1,4 @@
-﻿# pubmed_fetcher.py - PubMed 文献爬取 + 翻译 + 邮件推送（支持多配置独立运行）
+﻿# pubmed_fetcher.py - PubMed 文献爬取 + 翻译 + AI设计启发 + 邮件推送
 
 import argparse
 import datetime
@@ -10,6 +10,7 @@ import os
 import smtplib
 import ssl
 import time
+import urllib.request
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
@@ -31,6 +32,8 @@ SENDER_EMAIL = cfg.SENDER_EMAIL
 SMTP_AUTH_CODE = cfg.SMTP_AUTH_CODE
 RECEIVER_EMAILS = cfg.RECEIVER_EMAILS
 CONFIG_NAME = args.config
+
+ZHIPU_API_KEY = os.environ.get("ZHIPU_API_KEY", "")
 
 logging.basicConfig(
     level=logging.INFO,
@@ -72,6 +75,62 @@ def translate(text: str) -> str:
     except Exception as e:
         log.warning(f"翻译失败: {e}")
         return text
+
+
+# ---------- 智谱 GLM 设计启发总结 ----------
+
+INSIGHT_PROMPT = """你是一名CAR-M（嵌合抗原受体巨噬细胞）领域的资深研究员。请基于以下文献标题和中文摘要，从两个维度总结设计启发：
+
+1. **递送方式：** 文中使用了什么方法将CAR基因导入巨噬细胞？是否有新型载体、体内递送策略、或递送优化方案？
+2. **CAR-M 结构设计：** 文中CAR的结构特点是什么？靶向什么抗原？采用了什么信号域/共刺激域？是否有结构创新？
+
+要求：
+- 只提取摘要中明确提到或可合理推断的信息，不要编造
+- 简洁精炼，每个维度2-3句话
+- 如果某个维度在摘要中无法提取，写"摘要中未明确提及"
+- 用中文回答，格式严格如下：
+
+**💡 递送方式：** xxx
+**🧬 CAR-M 结构设计：** xxx
+
+标题：{title}
+摘要：{abstract}"""
+
+
+def call_zhipu(prompt: str, max_retries: int = 3) -> str:
+    """调用智谱 GLM-4-Flash API"""
+    url = "https://open.bigmodel.cn/api/paas/v4/chat/completions"
+    payload = json.dumps({
+        "model": "glm-4-flash",
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.3,
+        "max_tokens": 500,
+    }).encode("utf-8")
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {ZHIPU_API_KEY}",
+    }
+
+    for attempt in range(max_retries):
+        try:
+            req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                result = json.loads(resp.read().decode("utf-8"))
+                return result["choices"][0]["message"]["content"].strip()
+        except Exception as e:
+            log.warning(f"  GLM 调用失败 (attempt {attempt+1}/{max_retries}): {e}")
+            if attempt < max_retries - 1:
+                time.sleep(2)
+    return "AI 总结生成失败"
+
+
+def generate_insight(title: str, abstract_zh: str) -> str:
+    """生成 CAR-M 设计启发总结"""
+    if not ZHIPU_API_KEY:
+        return ""
+    prompt = INSIGHT_PROMPT.format(title=title, abstract=abstract_zh)
+    return call_zhipu(prompt)
 
 
 # ---------- PubMed 查询 ----------
@@ -137,7 +196,6 @@ def fetch_details(pmids: list[str]) -> list[dict]:
                     authors.append("et al.")
                     break
 
-        # 跳过无摘要的文章（Online ahead of print 等）
         if not abstract or not abstract.strip():
             log.info(f"  跳过无摘要: {title[:60]}...")
             continue
@@ -156,7 +214,7 @@ def fetch_details(pmids: list[str]) -> list[dict]:
 # ---------- 邮件发送 ----------
 
 def build_email_html(all_results: list[dict], search_days: int) -> str:
-    """all_results: [{"topic_zh": "肺泡巨噬细胞", "articles": [...]}, ...]"""
+    """all_results: [{"topic_zh": "CAR-M", "articles": [...]}, ...]"""
     today_str = datetime.date.today().strftime("%Y-%m-%d")
     total = sum(len(r["articles"]) for r in all_results)
 
@@ -170,7 +228,6 @@ body {{ font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; c
 .header h1 {{ margin: 0 0 6px 0; font-size: 22px; letter-spacing: 0.5px; }}
 .header .summary {{ font-size: 14px; opacity: 0.9; }}
 
-/* 主题分区标题 */
 .section-title {{ font-size: 18px; font-weight: 700; color: #1a5276; margin: 28px 0 4px 0; padding: 10px 0 6px 12px; border-left: 4px solid #2e86c1; }}
 .section-meta {{ font-size: 12px; color: #888; margin: 0 0 12px 16px; }}
 
@@ -195,6 +252,9 @@ body {{ font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; c
 .title-zh {{ font-size: 16px; color: #555; line-height: 1.5; margin: 6px 0; text-align: justify; font-weight: 700; }}
 .abstract-zh {{ font-size: 13px; color: #666; line-height: 1.7; margin-top: 6px; text-align: justify; padding: 10px 14px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #2e86c1; }}
 
+.insight-box {{ margin-top: 10px; padding: 12px 16px; background: linear-gradient(135deg, #fef9e7, #fdebd0); border-radius: 8px; border-left: 4px solid #f39c12; font-size: 13px; color: #7d6608; line-height: 1.7; }}
+.insight-box strong {{ color: #b7950b; }}
+
 .footer {{ text-align: center; color: #bbb; font-size: 11px; margin-top: 32px; padding: 16px 0; border-top: 1px solid #e5e8e8; }}
 </style></head><body>
 
@@ -214,7 +274,12 @@ body {{ font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; c
         for i, art in enumerate(articles, 1):
             title_zh = art.get("title_zh", "")
             abstract_zh = art.get("abstract_zh", "")
+            insight = art.get("insight", "")
             pubmed_url = f"https://pubmed.ncbi.nlm.nih.gov/{art['pmid']}/"
+
+            insight_html = ""
+            if insight and "失败" not in insight:
+                insight_html = f'<div class="insight-box">{insight}</div>\n'
 
             html_parts.append(f"""\
 <div class="paper">
@@ -232,15 +297,16 @@ body {{ font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; c
     <div class="title-zh">{html.escape(title_zh)}</div>
     <div class="abstract-zh">{html.escape(abstract_zh)}</div>
   </div>
+  {insight_html}
 </div>
 
 """)
 
     html_parts.append(f"""\
 <div class="footer">
-  CAR-M 顶刊日报 · Powered by OpenClaw<br>
+  CAR-M 顶刊日报 · Powered by OpenClaw + 智谱GLM<br>
   检索主题: CAR-M（嵌合抗原受体巨噬细胞, Chimeric Antigen Receptor Macrophage）<br>
-  检索范围: 71 本中科院1区顶刊
+  检索范围: 77 本中科院1区顶刊（含材料/递送方向）
 </div>
 </body></html>
 """)
@@ -312,6 +378,16 @@ def main():
             art["abstract_zh"] = translate(art["abstract"])
             time.sleep(0.5)
 
+        # AI 设计启发总结
+        if ZHIPU_API_KEY:
+            log.info(f"  开始生成 AI 设计启发...")
+            for i, art in enumerate(articles):
+                log.info(f"    {i+1}/{len(articles)}: {art['title'][:60]}...")
+                art["insight"] = generate_insight(art["title"], art["abstract_zh"])
+                time.sleep(0.5)
+        else:
+            log.info("  未配置 ZHIPU_API_KEY，跳过 AI 总结")
+
         all_results.append({"topic_zh": topic["name_zh"], "articles": articles})
         state["sent_pmids"].extend(pmids_to_fetch)
         any_new = True
@@ -337,4 +413,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
