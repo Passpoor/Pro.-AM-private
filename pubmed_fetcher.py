@@ -479,6 +479,16 @@ def main():
         # 获取详情 + 翻译
         articles = fetch_details(pmids_to_fetch)
 
+        # 如果全部无摘要被跳过
+        if not articles:
+            log.info(f"  {topic['name_zh']} 所有文章均无摘要，跳过")
+            continue
+
+        # 用实际有摘要的 PMID 记录去重
+        actual_pmids = [art["pmid"] for art in articles]
+        state["sent_pmids"].extend(actual_pmids)
+        any_new = True
+
         # 查询期刊排名
         log.info(f"  查询期刊排名...")
         for art in articles:
@@ -503,8 +513,6 @@ def main():
             log.info("  未配置 ZHIPU_API_KEY，跳过 AI 总结")
 
         all_results.append({"topic_zh": topic["name_zh"], "articles": articles})
-        state["sent_pmids"].extend(pmids_to_fetch)
-        any_new = True
 
     if not any_new:
         log.info("没有新文献，跳过推送")
