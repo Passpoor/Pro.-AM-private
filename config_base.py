@@ -80,7 +80,14 @@ JOURNALS_CAS1 = (
     # --- 呼吸1区 ---
     '"Am J Respir Crit Care Med"[Journal] OR '
     '"Thorax"[Journal] OR '
-    '"Eur Respir J"[Journal]'
+    '"Eur Respir J"[Journal] OR '
+    # --- 材料/递送1区（CAR-M 交叉领域） ---
+    '"Adv Mater*"[Journal] OR '
+    '"Biomaterials"[Journal] OR '
+    '"ACS Nano"[Journal] OR '
+    '"J Control Release"[Journal] OR '
+    '"Adv Drug Deliv Rev*"[Journal] OR '
+    '"Bioact Mater*"[Journal]'
 )
 
 RECENT_DAYS = 7
