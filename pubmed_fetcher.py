@@ -218,44 +218,62 @@ def build_email_html(all_results: list[dict], search_days: int) -> str:
     today_str = datetime.date.today().strftime("%Y-%m-%d")
     total = sum(len(r["articles"]) for r in all_results)
 
+    # 生成今日速览
+    overview_lines = []
+    for result in all_results:
+        for art in result["articles"]:
+            insight = art.get("insight", "")
+            if insight and "失败" not in insight:
+                # 提取关键信息，压缩成一行
+                first_line = insight.split("\n")[0].strip()
+                if first_line.startswith("**"):
+                    first_line = first_line.lstrip("*").strip()
+                overview_lines.append(f"<li>{html.escape(first_line)}</li>")
+
+    overview_html = ""
+    if overview_lines:
+        overview_html = f"""\
+<div class="overview">
+  <div class="overview-title">📌 今日速览</div>
+  <ul>{''.join(overview_lines)}</ul>
+</div>
+"""
+
     html_parts = [f"""\
 <!DOCTYPE html>
 <html><head><meta charset="utf-8">
 <style>
-body {{ font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; color: #333; max-width: 780px; margin: 0 auto; padding: 24px; background: #f4f6f9; }}
+body {{ font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; color: #333; max-width: 720px; margin: 0 auto; padding: 20px; background: #f4f6f9; }}
 
-.header {{ background: linear-gradient(135deg, #1a5276, #2e86c1); color: #fff; padding: 28px 32px; border-radius: 12px; margin-bottom: 8px; }}
-.header h1 {{ margin: 0 0 6px 0; font-size: 22px; letter-spacing: 0.5px; }}
-.header .summary {{ font-size: 14px; opacity: 0.9; }}
+.header {{ background: linear-gradient(135deg, #1a5276, #2e86c1); color: #fff; padding: 20px 24px; border-radius: 10px; margin-bottom: 6px; }}
+.header h1 {{ margin: 0 0 4px 0; font-size: 20px; letter-spacing: 0.5px; }}
+.header .summary {{ font-size: 13px; opacity: 0.9; }}
 
-.section-title {{ font-size: 18px; font-weight: 700; color: #1a5276; margin: 28px 0 4px 0; padding: 10px 0 6px 12px; border-left: 4px solid #2e86c1; }}
-.section-meta {{ font-size: 12px; color: #888; margin: 0 0 12px 16px; }}
+.overview {{ background: #fff; border-radius: 10px; padding: 14px 18px; margin: 10px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border-left: 4px solid #27ae60; }}
+.overview-title {{ font-size: 14px; font-weight: 700; color: #1e8449; margin: 0 0 6px 0; }}
+.overview ul {{ margin: 0; padding-left: 18px; }}
+.overview li {{ font-size: 12px; color: #555; line-height: 1.6; margin-bottom: 3px; }}
 
-.paper {{ background: #fff; border-radius: 10px; padding: 20px 24px; margin: 14px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border-left: 5px solid #2e86c1; transition: box-shadow 0.2s; }}
-.paper:hover {{ box-shadow: 0 3px 12px rgba(0,0,0,0.1); }}
+.paper {{ background: #fff; border-radius: 10px; padding: 14px 18px; margin: 8px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border-left: 4px solid #2e86c1; }}
 
-.paper-head {{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }}
-.paper-num {{ background: #2e86c1; color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }}
-.paper-link {{ font-size: 12px; }}
-.paper-link a {{ color: #2e86c1; text-decoration: none; border: 1px solid #d4e6f1; padding: 3px 10px; border-radius: 12px; }}
-.paper-link a:hover {{ background: #2e86c1; color: #fff; }}
+.paper-head {{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }}
+.paper-num {{ background: #2e86c1; color: #fff; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }}
+.paper-link a {{ color: #2e86c1; text-decoration: none; font-size: 11px; border: 1px solid #d4e6f1; padding: 2px 8px; border-radius: 10px; }}
 
-.tags {{ display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }}
-.tag {{ font-size: 11px; padding: 2px 10px; border-radius: 10px; color: #555; }}
-.tag-journal {{ background: #eaf2f8; color: #1a5276; font-weight: 600; }}
-.tag-date {{ background: #fef9e7; color: #7d6608; }}
-.tag-author {{ background: #f4ecf7; color: #6c3483; }}
+.meta {{ font-size: 11px; color: #888; margin-bottom: 4px; }}
 
-.title-en {{ font-size: 17px; font-weight: 700; color: #1a1a2e; line-height: 1.5; margin: 10px 0 6px 0; }}
+.title-zh {{ font-size: 15px; font-weight: 700; color: #1a1a2e; line-height: 1.5; margin: 4px 0; }}
+.title-en {{ font-size: 12px; color: #999; line-height: 1.4; margin: 2px 0 6px 0; }}
 
-.zh-section {{ margin-top: 6px; padding-top: 6px; border-top: 1px dashed #ddd; }}
-.title-zh {{ font-size: 16px; color: #555; line-height: 1.5; margin: 6px 0; text-align: justify; font-weight: 700; }}
-.abstract-zh {{ font-size: 13px; color: #666; line-height: 1.7; margin-top: 6px; text-align: justify; padding: 10px 14px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #2e86c1; }}
-
-.insight-box {{ margin-top: 10px; padding: 12px 16px; background: linear-gradient(135deg, #fef9e7, #fdebd0); border-radius: 8px; border-left: 4px solid #f39c12; font-size: 13px; color: #7d6608; line-height: 1.7; }}
+.insight-box {{ padding: 10px 14px; background: linear-gradient(135deg, #fef9e7, #fdebd0); border-radius: 8px; border-left: 3px solid #f39c12; font-size: 12px; color: #7d6608; line-height: 1.7; margin-top: 6px; }}
 .insight-box strong {{ color: #b7950b; }}
 
-.footer {{ text-align: center; color: #bbb; font-size: 11px; margin-top: 32px; padding: 16px 0; border-top: 1px solid #e5e8e8; }}
+details {{ margin-top: 6px; }}
+details summary {{ cursor: pointer; font-size: 12px; color: #2e86c1; user-select: none; padding: 4px 0; }}
+details summary:hover {{ color: #1a5276; }}
+.abstract-zh {{ font-size: 12px; color: #666; line-height: 1.7; text-align: justify; padding: 10px 14px; background: #f8f9fa; border-radius: 6px; margin-top: 4px; }}
+
+.footer {{ text-align: center; color: #bbb; font-size: 10px; margin-top: 24px; padding: 12px 0; border-top: 1px solid #e5e8e8; }}
 </style></head><body>
 
 <div class="header">
@@ -263,13 +281,12 @@ body {{ font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; c
   <div class="summary">📅 {today_str} &nbsp;&nbsp;|&nbsp;&nbsp; 🔍 近 {search_days} 天 &nbsp;&nbsp;|&nbsp;&nbsp; 📊 共 {total} 篇</div>
 </div>
 
+{overview_html}
 """]
 
     for result in all_results:
         topic_zh = result["topic_zh"]
         articles = result["articles"]
-        html_parts.append(f'<div class="section-title">{html.escape(topic_zh)}</div>\n')
-        html_parts.append(f'<div class="section-meta">{len(articles)} 篇文献</div>\n')
 
         for i, art in enumerate(articles, 1):
             title_zh = art.get("title_zh", "")
@@ -279,7 +296,7 @@ body {{ font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; c
 
             insight_html = ""
             if insight and "失败" not in insight:
-                insight_html = f'<div class="insight-box">{insight}</div>\n'
+                insight_html = f'<div class="insight-box">{insight}</div>'
 
             html_parts.append(f"""\
 <div class="paper">
@@ -287,17 +304,14 @@ body {{ font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; c
     <span class="paper-num">{i}</span>
     <span class="paper-link"><a href="{pubmed_url}" target="_blank">PubMed 🔗</a></span>
   </div>
-  <div class="tags">
-    <span class="tag tag-journal">📖 {html.escape(art['journal'] or 'Unknown')}</span>
-    <span class="tag tag-date">📆 {html.escape(art['date'] or '—')}</span>
-    <span class="tag tag-author">✍️ {html.escape(art['authors'] or '—')}</span>
-  </div>
+  <div class="meta">📖 {html.escape(art['journal'] or 'Unknown')} &nbsp;|&nbsp; 📆 {html.escape(art['date'] or '—')} &nbsp;|&nbsp; ✍️ {html.escape(art['authors'] or '—')}</div>
+  <div class="title-zh">{html.escape(title_zh)}</div>
   <div class="title-en">{html.escape(art['title'])}</div>
-  <div class="zh-section">
-    <div class="title-zh">{html.escape(title_zh)}</div>
-    <div class="abstract-zh">{html.escape(abstract_zh)}</div>
-  </div>
   {insight_html}
+  <details>
+    <summary>📖 展开中文摘要</summary>
+    <div class="abstract-zh">{html.escape(abstract_zh)}</div>
+  </details>
 </div>
 
 """)
