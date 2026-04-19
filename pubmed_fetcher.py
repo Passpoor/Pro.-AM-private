@@ -130,7 +130,22 @@ def generate_insight(title: str, abstract_zh: str) -> str:
     if not ZHIPU_API_KEY:
         return ""
     prompt = INSIGHT_PROMPT.format(title=title, abstract=abstract_zh)
-    return call_zhipu(prompt)
+    raw = call_zhipu(prompt)
+    return md_to_html(raw)
+
+
+def md_to_html(text: str) -> str:
+    """简易 Markdown → HTML（处理加粗、斜体、换行）"""
+    import re
+    if not text:
+        return ""
+    # 加粗 **text** → <strong>text</strong>
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
+    # 斜体 *text* → <em>text</em>（注意排除已匹配的加粗）
+    text = re.sub(r'(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)', r'<em>\1</em>', text)
+    # 换行
+    text = text.replace("\n", "<br>")
+    return text
 
 
 # ---------- PubMed 查询 ----------
