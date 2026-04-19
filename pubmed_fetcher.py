@@ -190,12 +190,10 @@ body {{ font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; c
 .tag-author {{ background: #f4ecf7; color: #6c3483; }}
 
 .title-en {{ font-size: 17px; font-weight: 700; color: #1a1a2e; line-height: 1.5; margin: 10px 0 6px 0; }}
-.abstract-en {{ font-size: 14px; color: #444; line-height: 1.7; margin: 10px 0; padding: 12px 16px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #2e86c1; text-align: justify; }}
 
-.zh-section {{ margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ddd; }}
-.zh-label {{ font-size: 11px; color: #aaa; margin: 8px 0 4px 0; text-transform: uppercase; letter-spacing: 1px; }}
-.title-zh {{ font-size: 17px; color: #555; line-height: 1.5; margin: 6px 0; text-align: justify; font-weight: 700; }}
-.abstract-zh {{ font-size: 13px; color: #777; line-height: 1.6; margin-top: 6px; text-align: justify; }}
+.zh-section {{ margin-top: 6px; padding-top: 6px; border-top: 1px dashed #ddd; }}
+.title-zh {{ font-size: 16px; color: #555; line-height: 1.5; margin: 6px 0; text-align: justify; font-weight: 700; }}
+.abstract-zh {{ font-size: 13px; color: #666; line-height: 1.7; margin-top: 6px; text-align: justify; padding: 10px 14px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #2e86c1; }}
 
 .footer {{ text-align: center; color: #bbb; font-size: 11px; margin-top: 32px; padding: 16px 0; border-top: 1px solid #e5e8e8; }}
 </style></head><body>
@@ -230,9 +228,7 @@ body {{ font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; c
     <span class="tag tag-author">✍️ {html.escape(art['authors'] or '—')}</span>
   </div>
   <div class="title-en">{html.escape(art['title'])}</div>
-  <div class="abstract-en">{html.escape(art['abstract'])}</div>
   <div class="zh-section">
-    <div class="zh-label">中文翻译</div>
     <div class="title-zh">{html.escape(title_zh)}</div>
     <div class="abstract-zh">{html.escape(abstract_zh)}</div>
   </div>
