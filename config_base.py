@@ -102,5 +102,4 @@ SMTP_AUTH_CODE = os.environ["SMTP_AUTH_CODE"]
 # ========== 收件人列表 ==========
 RECEIVER_EMAILS = [
     "persist2021@163.com",
-    "fengqian@sjtu.edu.cn",
 ]
