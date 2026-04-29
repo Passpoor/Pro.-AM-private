@@ -490,10 +490,17 @@ def main():
             new_pmids = [p for p in all_pmids if p not in state.get("sent_pmids", [])]
             search_days = MAX_BACKFILL_DAYS
 
-        if not new_pmids:
-            log.info(f"  {topic['name_zh']} 无新文献")
-            continue
-
+                if not new_pmids:
+            # Try fallback query (without journal filter) if available
+            fallback_query = topic.get("fallback_query")
+            if fallback_query:
+                log.info(f"  顶刊无新论文，尝试宽泛检索...")
+                fb_pmids = search_pubmed(fallback_query, MAX_BACKFILL_DAYS, topic["max_results"])
+                new_pmids = [p for p in fb_pmids if p not in state.get("sent_pmids", [])]
+                search_days = MAX_BACKFILL_DAYS
+            if not new_pmids:
+                log.info(f"  {topic['name_zh']} 没有新论文")
+                continue
         pmids_to_fetch = new_pmids[:topic["max_results"]]
         log.info(f"  准备推送 {len(pmids_to_fetch)} 篇")
 
