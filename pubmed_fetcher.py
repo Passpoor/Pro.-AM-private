@@ -490,7 +490,7 @@ def main():
             new_pmids = [p for p in all_pmids if p not in state.get("sent_pmids", [])]
             search_days = MAX_BACKFILL_DAYS
 
-                if not new_pmids:
+        if not new_pmids:
             # Try fallback query (without journal filter) if available
             fallback_query = topic.get("fallback_query")
             if fallback_query:
