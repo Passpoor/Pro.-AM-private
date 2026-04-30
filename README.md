@@ -1,63 +1,76 @@
 # Pro.-AM
 
-鑷姩浠?PubMed 妫€绱?**CAR-M锛堝祵鍚堟姉鍘熷彈浣撳法鍣粏鑳烇級** 椤跺垔鏂囩尞锛屾彁鍙栨爣棰樹笌鎽樿锛屾瘡鏃ュ畾鏃剁炕璇戝苟鎺ㄩ€佽嚦閭銆?
-## 鍔熻兘
+自动从 PubMed 检索 **CAR-M（嵌合抗原受体巨噬细胞）** 顶刊文献，提取标题与摘要，每日定时翻译并推送至邮箱。
 
-- 馃攳 姣忔棩鑷姩妫€绱?PubMed 鏈€鏂版枃鐚?- 馃寪 鏍囬 + 鎽樿鑷姩缈昏瘧涓轰腑鏂?- 馃 AI 鏅鸿兘鎽樿锛圙LM-4-Flash锛屽熀浜庝綔鑰?鏈熷垔/鏍囬/鎽樿鐢熸垚涓枃瑙ｈ锛?- 馃搳 鑷姩鏌ヨ鏈熷垔 SCI/JCI/JCI5/涓闄㈠垎鍖猴紙EasyScholar锛?- 馃摟 閭欢鎺ㄩ€佽嚦 persist2021@163.com
-- 馃攣 鑷姩鍘婚噸锛屼笉浼氶噸澶嶆帹閫?- 馃 GitHub Actions 瀹氭椂杩愯锛堝寳浜?07:30锛?- 馃搫 鏃犳憳瑕佹枃绔犺嚜鍔ㄨ烦杩?- 馃攢 Fallback 鏈哄埗锛氶《鍒婃煡璇㈡棤鏂版枃鐚椂鑷姩闄嶇骇鍒板箍娉涙绱?
-## 妫€绱㈡ā鍧?
-| 妯″潡 | 涓婚 | 鎺ㄩ€佹椂闂达紙鍖椾含锛?|
+## 功能
+
+- 🔍 每日自动检索 PubMed 最新文献
+- 🌐 标题 + 摘要自动翻译为中文
+- 🤖 AI 智能摘要（GLM-4-Flash，基于作者/期刊/标题/摘要生成中文解读）
+- 📊 自动查询期刊 SCI/JCI/JCI5/中科院分区（EasyScholar）
+- 📧 邮件推送至 persist2021@163.com
+- 🔁 自动去重，不会重复推送
+- 🤖 GitHub Actions 定时运行（北京 07:30）
+- 📄 无摘要文章自动跳过
+- 🔀 Fallback 机制：顶刊查询无新文献时自动降级到广泛检索
+
+## 检索模块
+
+| 模块 | 主题 | 推送时间（北京） |
 |------|------|-----------------|
-| 1 | CAR-M锛堝祵鍚堟姉鍘熷彈浣撳法鍣粏鑳烇級 | 07:30 |
+| 1 | CAR-M（嵌合抗原受体巨噬细胞） | 07:30 |
 
-### 妫€绱㈠紡
+### 检索式
 
-**涓绘绱紙闄愬畾 77 鏈腑绉戦櫌 1 鍖洪《鍒婏級锛?*
+**主检索（限定 77 本中科院 1 区顶刊）：**
 
-``
+```
 ("chimeric antigen receptor macrophage*"[Title/Abstract] OR 
  "CAR macrophage*"[Title/Abstract] OR 
  "CAR-M"[Title/Abstract] OR 
  "CAR-Mac"[Title/Abstract] OR 
  "chimeric antigen receptor"[Title] AND "macrophage*"[Title])
-``
+```
 
-**Fallback 妫€绱紙涓嶉檺鏈熷垔锛岄《鍒婃棤鏂版枃鐚椂鑷姩瑙﹀彂锛夛細**
+**Fallback 检索（不限期刊，顶刊无新文献时自动触发）：**
 
-``
+```
 "chimeric antigen receptor macrophage*"[Title/Abstract] OR 
 "CAR macrophage*"[Title/Abstract] OR 
 "CAR-M"[Title/Abstract] OR 
 "CAR-Mac"[Title/Abstract] OR 
 ("chimeric antigen receptor"[Title] AND "macrophage*"[Title])
-``
+```
 
-鎵€鏈夋ā鍧楀潎闄愬畾 **77 鏈腑绉戦櫌 1 鍖烘湡鍒?*锛堣瑙?config_base.py锛夈€?
-## 浣跨敤
+所有模块均限定 **77 本中科院 1 区期刊**（详见 config_base.py）。
 
-1. Fork 鎴?Clone 鏈粨搴?2. 鍦ㄤ粨搴?Settings 鈫?Secrets and variables 鈫?Actions 鈫?New repository secret 涓坊鍔狅細
-   - SMTP_AUTH_CODE 鈥?163 閭 SMTP 鎺堟潈鐮?   - ZHIPU_API_KEY 鈥?鏅鸿氨 AI API Key锛堢敤浜?AI 鏅鸿兘鎽樿锛屽彲閫夛級
+## 使用
 
-## 椤圭洰缁撴瀯
+1. Fork 或 Clone 本仓库
+2. 在仓库 Settings → Secrets and variables → Actions → New repository secret 中添加：
+   - `SMTP_AUTH_CODE` — 163 邮箱 SMTP 授权码
+   - `ZHIPU_API_KEY` — 智谱 AI API Key（用于 AI 智能摘要，可选）
 
-``
+## 项目结构
+
+```
 Pro.-AM/
-鈹溾攢鈹€ config_base.py          # 鍏变韩閰嶇疆锛堟湡鍒婄櫧鍚嶅崟銆侀偖绠憋級
-鈹溾攢鈹€ config_car_m.py         # CAR-M 妫€绱㈣瘝 + fallback 妫€绱㈣瘝
-鈹溾攢鈹€ pubmed_fetcher.py       # 鍏变韩鐖彇浠ｇ爜
-鈹溾攢鈹€ README.md
-鈹斺攢鈹€ .github/workflows/
-    鈹斺攢鈹€ car_m.yml           # CAR-M 瀹氭椂浠诲姟
-``
+├── config_base.py          # 共享配置（期刊白名单、邮箱）
+├── config_car_m.py         # CAR-M 检索词 + fallback 检索词
+├── pubmed_fetcher.py       # 共享爬取代码
+├── README.md
+└── .github/workflows/
+    └── car_m.yml           # CAR-M 定时任务
+```
 
-## 渚濊禆
+## 依赖
 
-``
+```bash
 pip install biopython deep-translator requests
-``
+```
 
-## 鎵嬪姩杩愯
+## 手动运行
 
-``
+```bash
 python pubmed_fetcher.py --config config_car_m
-``
+```
