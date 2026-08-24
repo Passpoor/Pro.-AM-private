@@ -2,8 +2,22 @@ name: PubMed - CAR-M
 
 on:
   schedule:
-    - cron: '30 23 * * *'   # UTC 23:30 = 北京 07:30
+    - cron: '30 23 * * *' # UTC 23:30，北京时间约 07:30
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '只生成预览，不发送或写状态'
+        required: false
+        type: boolean
+        default: false
+      limit:
+        description: '限制处理篇数（留空表示不限制）'
+        required: false
+        type: string
+
+concurrency:
+  group: pubmed-car-m
+  cancel-in-progress: false
 
 jobs:
   pubmed-car-m:
@@ -11,28 +25,94 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
 
       - name: Install dependencies
-        run: pip install biopython deep-translator
+        run: pip install -r requirements-dev.txt
 
-      - name: Run PubMed fetcher
+      - name: Lint and test
+        run: |
+          ruff check .
+          ruff format --check .
+          python -m unittest discover -s tests -v
+
+      - name: Restore state
+        shell: bash
+        run: |
+          mkdir -p .runtime
+          git fetch origin state:refs/remotes/origin/state || true
+          if git cat-file -e origin/state:state_config_car_m.json 2>/dev/null; then
+            git show origin/state:state_config_car_m.json > .runtime/state_config_car_m.json
+          elif test -f state_config_car_m.json; then
+            cp state_config_car_m.json .runtime/state_config_car_m.json
+          else
+            printf '{"version":2,"papers":{},"last_successful_delivery":null}\n' > .runtime/state_config_car_m.json
+          fi
+
+      - name: Run PubMed monitor
+        id: monitor
+        continue-on-error: true
         env:
+          STATE_FILE: .runtime/state_config_car_m.json
+          NCBI_EMAIL: ${{ vars.NCBI_EMAIL }}
+          NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+          SMTP_SERVER: ${{ vars.SMTP_SERVER }}
+          SMTP_PORT: ${{ vars.SMTP_PORT }}
+          SENDER_EMAIL: ${{ vars.SENDER_EMAIL }}
+          RECEIVER_EMAILS: ${{ vars.RECEIVER_EMAILS }}
           SMTP_AUTH_CODE: ${{ secrets.SMTP_AUTH_CODE }}
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
-        run: python pubmed_fetcher.py --config config_car_m
-
-      - name: Commit state
+          EASYSCHOLAR_KEY: ${{ secrets.EASYSCHOLAR_KEY }}
+        shell: bash
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add state_config_car_m.json 2>/dev/null || true
-          git diff --cached --quiet || git commit -m "update state_car_m $(date -u +%Y-%m-%d)"
-          git pull --rebase origin main
-          git push
+          args=(--config config_car_m)
+          if [[ '${{ github.event.inputs.dry_run }}' == 'true' ]]; then args+=(--dry-run); fi
+          if [[ -n '${{ github.event.inputs.limit }}' ]]; then args+=(--limit '${{ github.event.inputs.limit }}'); fi
+          python pubmed_fetcher.py "${args[@]}"
+
+      - name: Persist state on dedicated branch
+        if: always() && github.event.inputs.dry_run != 'true'
+        shell: bash
+        run: |
+          test -f .runtime/state_config_car_m.json || exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          blob=$(git hash-object -w .runtime/state_config_car_m.json)
+          old_blob=$(git rev-parse origin/state:state_config_car_m.json 2>/dev/null || true)
+          if [[ "$blob" == "$old_blob" ]]; then exit 0; fi
+          tree=$(printf '100644 blob %s\tstate_config_car_m.json\n' "$blob" | git mktree)
+          parent=$(git rev-parse origin/state 2>/dev/null || true)
+          if [[ -n "$parent" ]]; then
+            commit=$(printf 'update CAR-M state %s\n' "$(date -u +%F)" | git commit-tree "$tree" -p "$parent")
+          else
+            commit=$(printf 'initialize CAR-M state\n' | git commit-tree "$tree")
+          fi
+          git push origin "$commit:refs/heads/state"
+
+      - name: Publish run summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo '## CAR-M 文献雷达'
+            echo
+            echo '- Monitor result: `${{ steps.monitor.outcome }}`'
+            printf -- '- UTC time: `%s`\n' "$(date -u +%FT%TZ)"
+            echo '- State branch: `state`'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Fail job when monitor failed
+        if: steps.monitor.outcome == 'failure'
+        run: exit 1

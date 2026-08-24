@@ -1,0 +1,2 @@
+biopython==1.88
+deep-translator==1.11.4

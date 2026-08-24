@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 pubmed.log
 .env
+.runtime/
+digest_preview.html
+state_*.json

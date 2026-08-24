@@ -93,13 +93,16 @@ JOURNALS_CAS1 = (
 RECENT_DAYS = 7
 MAX_BACKFILL_DAYS = 90
 
-# ========== 邮箱设置 ==========
-SMTP_SERVER = "smtp.163.com"
-SMTP_PORT = 465
-SENDER_EMAIL = "xseq_fastfreee@163.com"
-SMTP_AUTH_CODE = os.environ["SMTP_AUTH_CODE"]
-
-# ========== 收件人列表 ==========
+# ========== 外部服务与邮箱设置 ==========
+# 所有账号信息由环境变量注入，避免把邮箱或凭据提交到公开仓库。
+SMTP_SERVER = os.environ.get("SMTP_SERVER", "smtp.163.com")
+SMTP_PORT = int(os.environ.get("SMTP_PORT", "465"))
+SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "")
+SMTP_AUTH_CODE = os.environ.get("SMTP_AUTH_CODE", "")
 RECEIVER_EMAILS = [
-    "persist2021@163.com",
+    address.strip()
+    for address in os.environ.get("RECEIVER_EMAILS", "").split(",")
+    if address.strip()
 ]
+
+EASYSCHOLAR_KEY = os.environ.get("EASYSCHOLAR_KEY", "")
