@@ -1,48 +1,204 @@
 {
-  "sent_pmids": [
-    "41819724",
-    "41950518",
-    "41843671",
-    "41688427",
-    "41679284",
-    "41605215",
-    "41936892",
-    "42008208",
-    "41747445",
-    "41983511",
-    "41941643",
-    "41964040",
-    "41960698",
-    "41702507",
-    "41957823",
-    "41949712",
-    "41993313",
-    "41925028",
-    "41719637",
-    "41627624",
-    "41620190",
-    "41564514",
-    "41529546",
-    "41953034",
-    "41930147",
-    "41856807",
-    "41914298",
-    "41792726",
-    "41869320",
-    "41770372",
-    "41535541",
-    "41764548",
-    "41857569",
-    "41498784",
-    "42057107",
-    "42064077",
-    "42068103",
-    "42082268",
-    "42093036",
-    "42104273",
-    "42109891",
-    "42122143",
-    "42141200",
-    "42213756"
-  ]
+  "version": 2,
+  "papers": {
+    "41819724": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41950518": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41843671": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41688427": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41679284": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41605215": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41936892": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "42008208": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41747445": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41983511": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41941643": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41964040": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41960698": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41702507": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41957823": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41949712": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41993313": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41925028": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41719637": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41627624": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41620190": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41564514": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41529546": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41953034": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41930147": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41856807": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41914298": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41792726": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41869320": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41770372": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41535541": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41764548": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41857569": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "41498784": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "42057107": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "42064077": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "42068103": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "42082268": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "42093036": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "42104273": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "42109891": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "42122143": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "42141200": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "42213756": {
+      "status": "delivered",
+      "migrated": true
+    },
+    "42613461": {
+      "status": "pending",
+      "processed_at": "2026-08-24T23:48:24.287580+00:00",
+      "article": {
+        "pmid": "42613461",
+        "doi": "10.1038/s41590-026-02615-2",
+        "title": "Neutrophil-integrated syncytial CAR macrophage for cancer immunotherapy.",
+        "abstract": "The limited effectiveness of chimeric antigen receptor macrophage (CAR-M) therapy is largely due to poor tumor infiltration, reduced effector function and immune escape of target antigen-low tumors. Here we developed syncytial CAR-Ms (S-CAR-M) by fusing CAR-Ms with neutrophils. S-CAR-Ms accumulated in tumors more than conventional CAR-Ms because of chemokine-driven migration. By releasing neutrophil extracellular traps and reactive oxygen species inherited from neutrophils, S-CAR-Ms increased PtdSer exposure on tumor cells, leading to efficient phagocytosis of tumor debris through both the scFv-antigen and PtdSer-MerTK pathways. Thus, a single dose of S-CAR-Ms can reduce tumor burden, limit metastasis and prevent tumor recurrence in syngeneic and xenograft mouse models. Additionally, S-CAR-M therapy triggered antigen spreading, minimizing escape by target antigen-low tumor cells. S-CAR-Ms overcome limitations of conventional CAR-Ms toward solid tumors.",
+        "journal": "Nat Immunol",
+        "date": "2026 Aug 18",
+        "authors": "Tian T, Zhao S, Tian T, Li W, Zhang Z, et al.",
+        "publication_types": [
+          "Journal Article"
+        ],
+        "mesh_terms": [],
+        "rank": {},
+        "insight": {},
+        "title_zh": "Neutrophil-integrated syncytial CAR macrophage for cancer immunotherapy.",
+        "abstract_zh": "The limited effectiveness of chimeric antigen receptor macrophage (CAR-M) therapy is largely due to poor tumor infiltration, reduced effector function and immune escape of target antigen-low tumors. Here we developed syncytial CAR-Ms (S-CAR-M) by fusing CAR-Ms with neutrophils. S-CAR-Ms accumulated in tumors more than conventional CAR-Ms because of chemokine-driven migration. By releasing neutrophil extracellular traps and reactive oxygen species inherited from neutrophils, S-CAR-Ms increased PtdSer exposure on tumor cells, leading to efficient phagocytosis of tumor debris through both the scFv-antigen and PtdSer-MerTK pathways. Thus, a single dose of S-CAR-Ms can reduce tumor burden, limit metastasis and prevent tumor recurrence in syngeneic and xenograft mouse models. Additionally, S-CAR-M therapy triggered antigen spreading, minimizing escape by target antigen-low tumor cells. S-CAR-Ms overcome limitations of conventional CAR-Ms toward solid tumors.",
+        "topic_zh": "CAR-M嵌合抗原受体巨噬细胞研究速递"
+      }
+    }
+  },
+  "last_successful_delivery": null
 }
