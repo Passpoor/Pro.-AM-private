@@ -430,7 +430,7 @@ def run(config_name: str, dry_run: bool, limit: int | None, preview: Path) -> in
         or cfg.SENDER_EMAIL
         or "pro-am-literature-monitor@example.com"
     )
-    Entrez.api_key = os.environ.get("NCBI_API_KEY")
+    Entrez.api_key = os.environ.get("NCBI_API_KEY") or None
     Entrez.max_tries, Entrez.sleep_between_tries = 3, 5
     path = state_path_for(config_name)
     state = load_state(path)
