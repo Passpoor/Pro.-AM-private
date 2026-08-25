@@ -198,6 +198,52 @@
         "abstract_zh": "The limited effectiveness of chimeric antigen receptor macrophage (CAR-M) therapy is largely due to poor tumor infiltration, reduced effector function and immune escape of target antigen-low tumors. Here we developed syncytial CAR-Ms (S-CAR-M) by fusing CAR-Ms with neutrophils. S-CAR-Ms accumulated in tumors more than conventional CAR-Ms because of chemokine-driven migration. By releasing neutrophil extracellular traps and reactive oxygen species inherited from neutrophils, S-CAR-Ms increased PtdSer exposure on tumor cells, leading to efficient phagocytosis of tumor debris through both the scFv-antigen and PtdSer-MerTK pathways. Thus, a single dose of S-CAR-Ms can reduce tumor burden, limit metastasis and prevent tumor recurrence in syngeneic and xenograft mouse models. Additionally, S-CAR-M therapy triggered antigen spreading, minimizing escape by target antigen-low tumor cells. S-CAR-Ms overcome limitations of conventional CAR-Ms toward solid tumors.",
         "topic_zh": "CAR-M嵌合抗原受体巨噬细胞研究速递"
       }
+    },
+    "42636953": {
+      "status": "pending",
+      "processed_at": "2026-08-25T23:49:43.749046+00:00",
+      "article": {
+        "pmid": "42636953",
+        "doi": "10.1016/j.metabol.2026.156752",
+        "title": "The role of adipose tissue macrophages in adipose tissue fibrosis.",
+        "abstract": "Adipose tissue macrophages (ATMs) are a key immune cell population linking obesity, chronic low-grade inflammation, extracellular matrix (ECM) remodeling and systemic metabolic dysfunction. Recent single-cell and spatial omics studies indicate that ATMs cannot be adequately described by the traditional M1/M2 dichotomy. Instead, they form a continuum of states that includes lipid-associated macrophages (LAMs), perivascular macrophages (PVMs), sympathetic neuron-associated macrophages (SAMs), septal adipose tissue macrophages (sATMs) and candidate collagen-expressing macrophages (CEMs). Distinct ATM subsets can exert opposing effects, including inflammation, lipid buffering, tissue repair and fibrosis, depending on adipose depot, species, obesity stage and the mechanical microenvironment. In this review, we discuss adipose tissue fibrosis within a context-dependent framework of ATM-regulated fibro-inflammation. We evaluate the roles of ATMs in ECM deposition, adipose progenitor remodeling, mechano-biochemical positive feedback and the adipose tissue-liver axis. We focus on the interactions among TGF-beta/Smad, Piezo1/YAP, integrin/FAK, MINCLE-OSM, extracellular vesicles and adipocyte-derived signals, particularly adiponectin, and explain how these pathways affect tissue stiffening, ectopic lipid deposition and MASLD/MASH progression. We also stratify the evidence supporting CCR2/CCR5 blockade, macrophage metabolic reprogramming, Piezo1/integrin-targeted mechanotransduction, CAR-M therapy, RNAi and engineered macrophage therapies. This distinction separates strategies with metabolic or preclinical support from emerging approaches that remain at the proof-of-concept stage. Together, this review provides a more precise mechanistic framework for understanding obesity-associated adipose tissue fibrosis and its metabolic consequences.",
+        "journal": "Metabolism",
+        "date": "2026 Aug 24",
+        "authors": "Zhang D, Wu N",
+        "publication_types": [
+          "Journal Article",
+          "Review"
+        ],
+        "mesh_terms": [],
+        "rank": {},
+        "insight": {},
+        "title_zh": "The role of adipose tissue macrophages in adipose tissue fibrosis.",
+        "abstract_zh": "Adipose tissue macrophages (ATMs) are a key immune cell population linking obesity, chronic low-grade inflammation, extracellular matrix (ECM) remodeling and systemic metabolic dysfunction. Recent single-cell and spatial omics studies indicate that ATMs cannot be adequately described by the traditional M1/M2 dichotomy. Instead, they form a continuum of states that includes lipid-associated macrophages (LAMs), perivascular macrophages (PVMs), sympathetic neuron-associated macrophages (SAMs), septal adipose tissue macrophages (sATMs) and candidate collagen-expressing macrophages (CEMs). Distinct ATM subsets can exert opposing effects, including inflammation, lipid buffering, tissue repair and fibrosis, depending on adipose depot, species, obesity stage and the mechanical microenvironment. In this review, we discuss adipose tissue fibrosis within a context-dependent framework of ATM-regulated fibro-inflammation. We evaluate the roles of ATMs in ECM deposition, adipose progenitor remodeling, mechano-biochemical positive feedback and the adipose tissue-liver axis. We focus on the interactions among TGF-beta/Smad, Piezo1/YAP, integrin/FAK, MINCLE-OSM, extracellular vesicles and adipocyte-derived signals, particularly adiponectin, and explain how these pathways affect tissue stiffening, ectopic lipid deposition and MASLD/MASH progression. We also stratify the evidence supporting CCR2/CCR5 blockade, macrophage metabolic reprogramming, Piezo1/integrin-targeted mechanotransduction, CAR-M therapy, RNAi and engineered macrophage therapies. This distinction separates strategies with metabolic or preclinical support from emerging approaches that remain at the proof-of-concept stage. Together, this review provides a more precise mechanistic framework for understanding obesity-associated adipose tissue fibrosis and its metabolic consequences.",
+        "topic_zh": "CAR-M嵌合抗原受体巨噬细胞研究速递"
+      }
+    },
+    "42615336": {
+      "status": "pending",
+      "processed_at": "2026-08-25T23:49:43.749046+00:00",
+      "article": {
+        "pmid": "42615336",
+        "doi": "10.1002/advs.77234",
+        "title": "Engineering CAR-Macrophages With Advanced Delivery Systems for Tissue Repair.",
+        "abstract": "Tissue injury and organ dysfunction remain major clinical challenges, as conventional therapies often fail to achieve functional regeneration. Chimeric antigen receptor (CAR) technology endows macrophages with the ability to specifically recognize and clear pathological targets, making CAR-macrophages (CAR-M) a promising tool in tissue engineering and regenerative medicine. However, the efficient, safe, and controllable engineering of CAR-M still depends on advanced chemical delivery systems. This review systematically summarizes five major platforms for CAR-M engineering, including viral vectors, lipid nanoparticles (LNPs), exosomes/extracellular vesicles, polymeric nanocarriers, and biomaterial scaffolds. Particular emphasis is placed on LNPs optimization strategies, including ionizable lipid design, surface modification, and regulation of physicochemical properties. The influence of delivery systems on macrophage uptake, intracellular trafficking, and polarization is also discussed. This review further highlights recent preclinical applications of CAR-M therapy in liver fibrosis, cardiac fibrosis, and atherosclerosis. Furthermore, a comparative analysis of CAR-M with CAR‑T and CAR‑NK therapies is provided, and key challenges, including phenotypic instability, off‑target effects, and limited in vivo persistence, are discussed. Finally, future directions are outlined, including advanced delivery strategies, multi‑target CAR designs, and metabolic modulation, highlighting new opportunities for precision regenerative immunotherapy.",
+        "journal": "Adv Sci (Weinh)",
+        "date": "2026 Aug 19",
+        "authors": "Zhang Y, Yu J, Yuan L, Fu Z, Yao Y, et al.",
+        "publication_types": [
+          "Journal Article",
+          "Review"
+        ],
+        "mesh_terms": [],
+        "rank": {},
+        "insight": {},
+        "title_zh": "Engineering CAR-Macrophages With Advanced Delivery Systems for Tissue Repair.",
+        "abstract_zh": "Tissue injury and organ dysfunction remain major clinical challenges, as conventional therapies often fail to achieve functional regeneration. Chimeric antigen receptor (CAR) technology endows macrophages with the ability to specifically recognize and clear pathological targets, making CAR-macrophages (CAR-M) a promising tool in tissue engineering and regenerative medicine. However, the efficient, safe, and controllable engineering of CAR-M still depends on advanced chemical delivery systems. This review systematically summarizes five major platforms for CAR-M engineering, including viral vectors, lipid nanoparticles (LNPs), exosomes/extracellular vesicles, polymeric nanocarriers, and biomaterial scaffolds. Particular emphasis is placed on LNPs optimization strategies, including ionizable lipid design, surface modification, and regulation of physicochemical properties. The influence of delivery systems on macrophage uptake, intracellular trafficking, and polarization is also discussed. This review further highlights recent preclinical applications of CAR-M therapy in liver fibrosis, cardiac fibrosis, and atherosclerosis. Furthermore, a comparative analysis of CAR-M with CAR‑T and CAR‑NK therapies is provided, and key challenges, including phenotypic instability, off‑target effects, and limited in vivo persistence, are discussed. Finally, future directions are outlined, including advanced delivery strategies, multi‑target CAR designs, and metabolic modulation, highlighting new opportunities for precision regenerative immunotherapy.",
+        "topic_zh": "CAR-M嵌合抗原受体巨噬细胞研究速递"
+      }
     }
   },
   "last_successful_delivery": null
