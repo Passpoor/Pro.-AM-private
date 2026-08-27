@@ -244,6 +244,39 @@
         "abstract_zh": "Tissue injury and organ dysfunction remain major clinical challenges, as conventional therapies often fail to achieve functional regeneration. Chimeric antigen receptor (CAR) technology endows macrophages with the ability to specifically recognize and clear pathological targets, making CAR-macrophages (CAR-M) a promising tool in tissue engineering and regenerative medicine. However, the efficient, safe, and controllable engineering of CAR-M still depends on advanced chemical delivery systems. This review systematically summarizes five major platforms for CAR-M engineering, including viral vectors, lipid nanoparticles (LNPs), exosomes/extracellular vesicles, polymeric nanocarriers, and biomaterial scaffolds. Particular emphasis is placed on LNPs optimization strategies, including ionizable lipid design, surface modification, and regulation of physicochemical properties. The influence of delivery systems on macrophage uptake, intracellular trafficking, and polarization is also discussed. This review further highlights recent preclinical applications of CAR-M therapy in liver fibrosis, cardiac fibrosis, and atherosclerosis. Furthermore, a comparative analysis of CAR-M with CAR‑T and CAR‑NK therapies is provided, and key challenges, including phenotypic instability, off‑target effects, and limited in vivo persistence, are discussed. Finally, future directions are outlined, including advanced delivery strategies, multi‑target CAR designs, and metabolic modulation, highlighting new opportunities for precision regenerative immunotherapy.",
         "topic_zh": "CAR-M嵌合抗原受体巨噬细胞研究速递"
       }
+    },
+    "42643573": {
+      "status": "pending",
+      "processed_at": "2026-08-27T04:39:10.706437+00:00",
+      "article": {
+        "pmid": "42643573",
+        "doi": "10.3389/fimmu.2026.1711076",
+        "title": "Immune modulation in gastric cancer: from macrophage polarization to immunotherapy.",
+        "abstract": "Gastric cancer remains a highly lethal malignancy characterized by late diagnosis, limited therapeutic responsiveness, and a profoundly immunosuppressive tumor microenvironment. Among the diverse cellular components shaping this ecosystem, tumor-associated macrophages (TAMs) have emerged as central orchestrators of gastric carcinogenesis, metastatic dissemination, and therapeutic resistance. TAMs promote tumor initiation through inflammatory recruitment and polarization, facilitate invasion and angiogenesis via cytokines, matrix-remodeling enzymes, and exosomal cargo, and impair antitumor immunity by suppressing T-cell and natural killer cell function. In addition, TAMs contribute to resistance to immune checkpoint blockade by sustaining an immunosuppressive tumor immune microenvironment enriched in Tregs, myeloid-derived suppressor cells, and inhibitory mediators such as TGF-beta, IL-10, and PD-L1. Recent advances further highlight the translational promise of macrophage-targeted strategies, including polarization reprogramming, recruitment blockade, and chimeric antigen receptor macrophage therapy. Previous reviews primarily focus on the general biological roles of TAMs, this review synthesizes newly emerging mechanisms of TAM-mediated immunotherapy resistance, including spatial heterogeneity, stromal-vascular remodeling, and exosomal crosstalk, with the latest clinical advances in macrophage-directed immunotherapies. We specifically highlight the translational potential and current clinical trial landscape of chimeric antigen receptor macrophage (CAR-M) therapy and targeted reprogramming strategies, providing a forward-looking perspective on overcoming immune checkpoint blockade resistance in gastric cancer.",
+        "journal": "Front Immunol",
+        "date": "2026",
+        "authors": "Cui X, Wang X, Jiang N, Zong F, Guan W",
+        "publication_types": [
+          "Journal Article",
+          "Review"
+        ],
+        "mesh_terms": [
+          "Humans",
+          "*Stomach Neoplasms/immunology/therapy/pathology/metabolism",
+          "Tumor Microenvironment/immunology",
+          "Animals",
+          "*Tumor-Associated Macrophages/immunology/metabolism",
+          "*Immunotherapy/methods",
+          "*Macrophage Activation/immunology",
+          "*Macrophages/immunology/metabolism",
+          "*Immunomodulation"
+        ],
+        "rank": {},
+        "insight": {},
+        "title_zh": "胃癌的免疫调节：从巨噬细胞极化到免疫治疗。",
+        "abstract_zh": "胃癌仍然是一种高度致命的恶性肿瘤，其特点是诊断较晚、治疗反应有限以及肿瘤微环境具有严重的免疫抑制性。在塑造这个生态系统的多种细胞成分中，肿瘤相关巨噬细胞（TAM）已成为胃癌发生、转移扩散和治疗耐药的中心协调者。 TAM 通过炎症募集和极化促进肿瘤发生，通过细胞因子、基质重塑酶和外泌体货物促进侵袭和血管生成，并通过抑制 T 细胞和自然杀伤细胞功能损害抗肿瘤免疫。此外，TAM 通过维持富含 Treg、骨髓源性抑制细胞和抑制性介质（如 TGF-β、IL-10 和 PD-L1）的免疫抑制性肿瘤免疫微环境，有助于抵抗免疫检查点阻断。最近的进展进一步凸显了巨噬细胞靶向策略的转化前景，包括极化重编程、招募阻断和嵌合抗原受体巨噬细胞治疗。之前的综述主要关注TAM的一般生物学作用，本综述综合了TAM介导的免疫治疗耐药的新机制，包括空间异质性、基质血管重塑和外泌体串扰，以及巨噬细胞定向免疫治疗的最新临床进展。我们特别强调嵌合抗原受体巨噬细胞（CAR-M）疗法和靶向重编程策略的转化潜力和当前临床试验情况，为克服胃癌免疫检查点阻断耐药性提供前瞻性视角。",
+        "topic_zh": "CAR-M嵌合抗原受体巨噬细胞研究速递"
+      }
     }
   },
   "last_successful_delivery": null
