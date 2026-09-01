@@ -277,6 +277,29 @@
         "abstract_zh": "胃癌仍然是一种高度致命的恶性肿瘤，其特点是诊断较晚、治疗反应有限以及肿瘤微环境具有严重的免疫抑制性。在塑造这个生态系统的多种细胞成分中，肿瘤相关巨噬细胞（TAM）已成为胃癌发生、转移扩散和治疗耐药的中心协调者。 TAM 通过炎症募集和极化促进肿瘤发生，通过细胞因子、基质重塑酶和外泌体货物促进侵袭和血管生成，并通过抑制 T 细胞和自然杀伤细胞功能损害抗肿瘤免疫。此外，TAM 通过维持富含 Treg、骨髓源性抑制细胞和抑制性介质（如 TGF-β、IL-10 和 PD-L1）的免疫抑制性肿瘤免疫微环境，有助于抵抗免疫检查点阻断。最近的进展进一步凸显了巨噬细胞靶向策略的转化前景，包括极化重编程、招募阻断和嵌合抗原受体巨噬细胞治疗。之前的综述主要关注TAM的一般生物学作用，本综述综合了TAM介导的免疫治疗耐药的新机制，包括空间异质性、基质血管重塑和外泌体串扰，以及巨噬细胞定向免疫治疗的最新临床进展。我们特别强调嵌合抗原受体巨噬细胞（CAR-M）疗法和靶向重编程策略的转化潜力和当前临床试验情况，为克服胃癌免疫检查点阻断耐药性提供前瞻性视角。",
         "topic_zh": "CAR-M嵌合抗原受体巨噬细胞研究速递"
       }
+    },
+    "42669593": {
+      "status": "pending",
+      "processed_at": "2026-09-01T01:58:57.324686+00:00",
+      "article": {
+        "pmid": "42669593",
+        "doi": "10.1002/advs.77503",
+        "title": "CAR-Engineered Cell Therapies Beyond Cancer: Reprogramming Fibrosis and Immune-Mediated Inflammation.",
+        "abstract": "Chimeric antigen receptor (CAR)-engineered cell therapies are being extended from hematological malignancies to autoimmune, inflammatory, and fibrotic diseases, although the maturity of evidence differs markedly among platforms and indications. Early clinical evidence from case reports, small case series, and early-phase trials suggests that CD19- or BCMA-directed CAR-T cells can induce deep B-cell or plasma-cell depletion and sustained remission in selected patients with refractory autoimmune diseases; however, their comparative efficacy, durability, and long-term safety remain incompletely defined. By contrast, CAR-based treatment of organ fibrosis remains predominantly preclinical. In animal models, transient in vivo CAR-T generation has attenuated fibrosis, whereas CAR-macrophage(CAR-M) approaches have demonstrated targeted phagocytosis and microenvironmental remodeling. Evidence for CAR-natural killer cells (CAR-NK) in non-oncological diseases is currently limited to preclinical studies and an individual-patient observation, despite their potential advantages for allogeneic and off-the-shelf manufacturing. This Review critically compares CAR-T, CAR-M, and CAR-NK platforms, examines emerging unconventional immune-cell and iPSC-derived products, and evaluates programmable and in vivo CAR-engineering strategies. We propose \"controllable spatiotemporal reprogramming\" as a framework linking target specificity, tissue distribution, activity duration, reversibility, manufacturing, and disease-specific safety requirements.",
+        "journal": "Adv Sci (Weinh)",
+        "date": "2026 Aug 30",
+        "authors": "Xu PJ, Zhang ZJ, Jin J, Xu HY, Gu YX, et al.",
+        "publication_types": [
+          "Journal Article",
+          "Review"
+        ],
+        "mesh_terms": [],
+        "rank": {},
+        "insight": {},
+        "title_zh": "CAR-Engineered Cell Therapies Beyond Cancer: Reprogramming Fibrosis and Immune-Mediated Inflammation.",
+        "abstract_zh": "嵌合抗原受体（CAR）工程细胞疗法正在从血液恶性肿瘤扩展到自身免疫、炎症和纤维化疾病，尽管证据的成熟度在不同平台和适应症之间存在显着差异。来自病例报告、小病例系列和早期试验的早期临床证据表明，CD19 或 BCMA 定向的 CAR-T 细胞可以在选定的难治性自身免疫性疾病患者中诱导深度 B 细胞或浆细胞耗竭并持续缓解；然而，它们的相对功效、耐久性和长期安全性仍未完全确定。相比之下，基于 CAR 的器官纤维化治疗仍然主要处于临床前阶段。在动物模型中，瞬时体内 CAR-T 生成可减轻纤维化，而 CAR-巨噬细胞 (CAR-M) 方法已证明具有靶向吞噬作用和微环境重塑作用。 CAR-自然杀伤细胞（CAR-NK）在非肿瘤疾病中的证据目前仅限于临床前研究和个体患者观察，尽管它们在同种异体和现成制造方面具有潜在优势。本综述批判性地比较了 CAR-T、CAR-M 和 CAR-NK 平台，研究了新兴的非常规免疫细胞和 iPSC 衍生产品，并评估了可编程和体内 CAR 工程策略。我们提出“可控时空重编程”作为连接目标特异性、组织分布、活动持续时间、可逆性、制造和特定疾病安全要求的框架。",
+        "topic_zh": "CAR-M嵌合抗原受体巨噬细胞研究速递"
+      }
     }
   },
   "last_successful_delivery": null
