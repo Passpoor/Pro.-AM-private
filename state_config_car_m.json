@@ -300,6 +300,43 @@
         "abstract_zh": "嵌合抗原受体（CAR）工程细胞疗法正在从血液恶性肿瘤扩展到自身免疫、炎症和纤维化疾病，尽管证据的成熟度在不同平台和适应症之间存在显着差异。来自病例报告、小病例系列和早期试验的早期临床证据表明，CD19 或 BCMA 定向的 CAR-T 细胞可以在选定的难治性自身免疫性疾病患者中诱导深度 B 细胞或浆细胞耗竭并持续缓解；然而，它们的相对功效、耐久性和长期安全性仍未完全确定。相比之下，基于 CAR 的器官纤维化治疗仍然主要处于临床前阶段。在动物模型中，瞬时体内 CAR-T 生成可减轻纤维化，而 CAR-巨噬细胞 (CAR-M) 方法已证明具有靶向吞噬作用和微环境重塑作用。 CAR-自然杀伤细胞（CAR-NK）在非肿瘤疾病中的证据目前仅限于临床前研究和个体患者观察，尽管它们在同种异体和现成制造方面具有潜在优势。本综述批判性地比较了 CAR-T、CAR-M 和 CAR-NK 平台，研究了新兴的非常规免疫细胞和 iPSC 衍生产品，并评估了可编程和体内 CAR 工程策略。我们提出“可控时空重编程”作为连接目标特异性、组织分布、活动持续时间、可逆性、制造和特定疾病安全要求的框架。",
         "topic_zh": "CAR-M嵌合抗原受体巨噬细胞研究速递"
       }
+    },
+    "42708095": {
+      "status": "pending",
+      "processed_at": "2026-09-09T01:24:32.895422+00:00",
+      "article": {
+        "pmid": "42708095",
+        "doi": "10.7150/thno.132172",
+        "title": "Targeted phagocytosis of TNF-alpha by CAR macrophages restores immune homeostasis in arthritis.",
+        "abstract": "RATIONALE: Dysregulated phagocytic clearance within the synovial microenvironment contributes to persistent inflammation and impairs immune homeostasis in rheumatoid arthritis (RA). Because MerTK-positive macrophages are essential for efferocytosis and inflammation resolution, but are functionally impaired in RA, this study aimed to engineer macrophages capable of enhancing tumor necrosis factor-alpha (TNF-alpha) clearance and restoring inflammation-resolving macrophage function. METHODS: We generated anti-TNFalpha chimeric antigen receptor macrophages (CAR-M) by replacing the MerTK antigen-binding domain with a TNF-R1 fragment. The phagocytic and degradative capacity of CAR-M toward soluble TNF-alpha was assessed, together with activation of Rho GTPases Rac1, Cdc42, and RhoA. Macrophage inflammatory mediator production, phenotypic polarization, SOCS1/3, NF-kappaB, and MAPK signaling were analyzed. The effects of CAR-M cells were further compared with adalimumab and control treatments under synovial fluid stimulation from patients with arthritis and in mice with collagen-induced arthritis (CIA). RESULTS: Anti-TNFalpha CAR-M showed markedly enhanced phagocytosis and degradation of soluble TNF-alpha, accompanied by Rac1, Cdc42, and RhoA activation. CAR activation reduced inflammatory mediator production, including soluble TNF-alpha, interleukin-1 beta (IL-1beta), and interleukin-6 (IL-6), while increasing interleukin-10 (IL-10) secretion. This functional shift was associated with polarization toward an inflammation-resolving MerTK(+)CD206(+) phenotype, SOCS1/3 upregulation, and NF-kappaB and MAPK pathway inhibition. Under stimulation with synovial fluid from arthritis patients, anti-TNFalpha CAR-M decreased TNF-alpha and IL-6 levels and drove macrophages toward an M2-like anti-inflammatory state. In CIA mice, local in situ CAR-M cell treatment produced stronger therapeutic effects than adalimumab or other controls, significantly alleviating inflammatory activation, clinical symptoms, and joint pathologies. CONCLUSIONS: Anti-TNFalpha CAR-M exert therapeutic effects via a dual mechanism: direct TNF-alpha clearance and synovial macrophage reprogramming toward a reparative phenotype. This synthetic biology strategy highlights the potential of precise cell engineering to correct phagocytic deficits and resolve chronic inflammation in RA.",
+        "journal": "Theranostics",
+        "date": "2026",
+        "authors": "Wang MQ, Zhu J, Liu CY, Yu XL, Huang YR, et al.",
+        "publication_types": [
+          "Journal Article"
+        ],
+        "mesh_terms": [
+          "Animals",
+          "*Tumor Necrosis Factor-alpha/metabolism/immunology",
+          "*Phagocytosis/immunology",
+          "*Macrophages/immunology/metabolism",
+          "Mice",
+          "Humans",
+          "*Arthritis, Experimental/immunology",
+          "*Arthritis, Rheumatoid/immunology",
+          "Homeostasis/immunology",
+          "c-Mer Tyrosine Kinase/metabolism/immunology",
+          "Male",
+          "Efferocytosis",
+          "Inflammation",
+          "NF-kappa B/metabolism"
+        ],
+        "rank": {},
+        "insight": {},
+        "title_zh": "CAR 巨噬细胞对 TNF-α 的靶向吞噬可恢复关节炎中的免疫稳态。",
+        "abstract_zh": "理由：滑膜微环境中的吞噬细胞清除失调会导致类风湿性关节炎 (RA) 的持续炎症并损害免疫稳态。由于 MerTK 阳性巨噬细胞对于胞吞作用和炎症消退至关重要，但在 RA 中功能受损，因此本研究旨在改造巨噬细胞，使其能够增强肿瘤坏死因子-α (TNF-alpha) 清除并恢复炎症消解巨噬细胞功能。方法：我们通过用 TNF-R1 片段替换 MerTK 抗原结合域来生成抗 TNFα 嵌合抗原受体巨噬细胞 (CAR-M)。评估了 CAR-M 对可溶性 TNF-α 的吞噬和降解能力，以及 Rho GTPases Rac1、Cdc42 和 RhoA 的激活。分析了巨噬细胞炎症介质的产生、表型极化、SOCS1/3、NF-kappaB 和 MAPK 信号传导。在关节炎患者和胶原诱导性关节炎 (CIA) 小鼠的滑液刺激下，进一步将 CAR-M 细胞的效果与阿达木单抗和对照治疗进行比较。结果：抗TNFα CAR-M显着增强了可溶性TNF-α的吞噬作用和降解作用，并伴有Rac1、Cdc42和RhoA激活。 CAR 激活减少炎症介质的产生，包括可溶性 TNF-α、白细胞介素 1 β (IL-1β) 和白细胞介素 6 (IL-6)，同时增加白细胞介素 10 (IL-10) 的分泌。这种功能转变与炎症消退MerTK(+)CD206(+)表型的极化、SOCS1/3上调以及NF-kappaB和MAPK通路抑制相关。在关节炎患者滑液的刺激下，抗 TNFα CAR-M 降低了 TNF-α 和 IL-6 水平，并驱使巨噬细胞进入 M2 样抗炎状态。在 CIA 小鼠中，局部原位 CAR-M 细胞治疗产生了比阿达木单抗或其他对照更强的治疗效果，显着减轻炎症激活、临床症状和关节病理。结论：抗 TNFα CAR-M 通过双重机制发挥治疗作用：直接 TNF-α 清除和滑膜巨噬细胞重编程至修复表型。这种合成生物学策略强调了精确细胞工程在纠正吞噬细胞缺陷和解决 RA 慢性炎症方面的潜力。",
+        "topic_zh": "CAR-M嵌合抗原受体巨噬细胞研究速递"
+      }
     }
   },
   "last_successful_delivery": null
